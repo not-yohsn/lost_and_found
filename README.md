@@ -45,7 +45,7 @@ A web-based system for reporting lost items, logging found items, automatically 
 
 ### Setup
 ```powershell
-git clone https://github.com/<your-user>/lost-and-found.git
+git clone https://github.com/not-yohsn/lost-and-found.git
 cd lost-and-found
 
 python -m venv venv
