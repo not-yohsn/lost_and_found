@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Service AI Chatbot — ERD</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0d0f14;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px 60px;
+    font-family: 'DM Mono', monospace;
+    color: #e8eaf0;
+    min-height: 100vh;
+  }
+
+  header { text-align: center; margin-bottom: 40px; }
+
+  header h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #f5f7fa, #8899bb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  header p {
+    margin-top: 6px;
+    font-size: 0.72rem;
+    color: #4a5270;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .erd-svg-wrap { width: 100%; max-width: 1140px; overflow-x: auto; }
+
+  svg#erd { display: block; width: 100%; height: auto; }
+
+  .legend {
+    margin-top: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px 32px;
+    font-size: 0.68rem;
+    color: #4a5268;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .legend-item { display: flex; align-items: center; gap: 8px; }
+  .leg-pk { background:#1e2e4a; color:#7eb8f7; padding:2px 7px; border-radius:4px; font-size:0.6rem; }
+  .leg-fk { background:#1e3028; color:#72d489; padding:2px 7px; border-radius:4px; font-size:0.6rem; }
+
+  footer {
+    margin-top: 40px;
+    font-size: 0.62rem;
+    color: #252a3a;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Customer Service AI Chatbot</h1>
+  <p>Entity Relationship Diagram</p>
+</header>
+
+<div class="erd-svg-wrap">
+<!--
+  LAYOUT (viewBox 0 0 1110 700)
+
+  Row 1  y=30
+    CUSTOMER    x=6   w=240 h=195  (7 fields)
+    SESSION     x=292 w=240 h=213  (8 fields)
+    MESSAGE     x=578 w=240 h=195  (7 fields)
+    KNOWLEDGE   x=864 w=240 h=178  (6 fields)
+
+  Row 2  y=310
+    AGENT       x=6   w=240 h=178  (6 fields)
+    ESCALATION  x=292 w=240 h=213  (8 fields)
+    TICKET      x=578 w=240 h=213  (8 fields)
+    CSAT        x=864 w=240 h=178  (6 fields)
+
+  RIGHT EDGES:  246  532  818  1104
+  CENTER X:     126  412  698  984
+-->
+<svg id="erd" viewBox="0 0 1110 700" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arr-blue"   markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L0,7 L7,3.5 Z" fill="#3a4a70"/></marker>
+    <marker id="arr-purple" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L0,7 L7,3.5 Z" fill="#5a3a80"/></marker>
+    <marker id="arr-teal"   markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L0,7 L7,3.5 Z" fill="#2a7070"/></marker>
+    <marker id="arr-green"  markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L0,7 L7,3.5 Z" fill="#3a6a45"/></marker>
+    <marker id="arr-gold"   markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L0,7 L7,3.5 Z" fill="#8a6a20"/></marker>
+    <marker id="arr-pink"   markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L0,7 L7,3.5 Z" fill="#7a3a60"/></marker>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- ═══════════════════════════════════════
+       CONNECTOR LINES (all static paths)
+       ═══════════════════════════════════════ -->
+
+  <!-- 1. Customer → Session  (1:N solid blue) -->
+  <!-- Customer right-center (246,128) → Session left-center (292,137) -->
+  <path d="M246,128 C269,128 269,137 292,137"
+        fill="none" stroke="#3a4a70" stroke-width="1.8" stroke-opacity="0.75"
+        marker-end="url(#arr-blue)"/>
+  <circle cx="246" cy="128" r="3" fill="#3a4a70" opacity="0.7"/>
+  <text x="269" y="122" font-family="monospace" font-size="9" fill="#4a6090" text-anchor="middle">1 : N</text>
+
+  <!-- 2. Session → Message  (1:N solid purple) -->
+  <!-- Session right-center (532,137) → Message left-center (578,128) -->
+  <path d="M532,137 C555,137 555,128 578,128"
+        fill="none" stroke="#5a3a80" stroke-width="1.8" stroke-opacity="0.75"
+        marker-end="url(#arr-purple)"/>
+  <circle cx="532" cy="137" r="3" fill="#5a3a80" opacity="0.7"/>
+  <text x="555" y="122" font-family="monospace" font-size="9" fill="#7a5aaa" text-anchor="middle">1 : N</text>
+
+  <!-- 3. Message → KnowledgeBase  (queries, dashed teal) -->
+  <!-- Message right (818,119) → KB left (864,119) -->
+  <path d="M818,119 L864,119"
+        fill="none" stroke="#2a7070" stroke-width="1.8" stroke-opacity="0.75"
+        stroke-dasharray="5,4"
+        marker-end="url(#arr-teal)"/>
+  <circle cx="818" cy="119" r="3" fill="#2a7070" opacity="0.7"/>
+  <text x="841" y="113" font-family="monospace" font-size="9" fill="#2a9090" text-anchor="middle">queries</text>
+
+  <!-- 4. Customer → Agent  (1:N vertical solid blue) -->
+  <!-- Customer bottom-center (126,225) → Agent top-center (126,310) -->
+  <path d="M126,225 L126,310"
+        fill="none" stroke="#3a4a70" stroke-width="1.8" stroke-opacity="0.75"
+        marker-end="url(#arr-blue)"/>
+  <circle cx="126" cy="225" r="3" fill="#3a4a70" opacity="0.7"/>
+  <text x="143" y="271" font-family="monospace" font-size="9" fill="#4a6090">1:N</text>
+
+  <!-- 5. Session → Escalation  (1:1 vertical solid purple) -->
+  <!-- Session bottom-center (412,243) → Escalation top-center (412,310) -->
+  <path d="M412,243 L412,310"
+        fill="none" stroke="#5a3a80" stroke-width="1.8" stroke-opacity="0.75"
+        marker-end="url(#arr-purple)"/>
+  <circle cx="412" cy="243" r="3" fill="#5a3a80" opacity="0.7"/>
+  <text x="428" y="280" font-family="monospace" font-size="9" fill="#7a5aaa">1:1</text>
+
+  <!-- 6. Escalation → Agent  (N:1 solid green) -->
+  <!-- Escalation left-center (292,417) → Agent right-center (246,399) -->
+  <path d="M292,417 C271,417 266,400 246,400"
+        fill="none" stroke="#3a6a45" stroke-width="1.8" stroke-opacity="0.75"
+        marker-end="url(#arr-green)"/>
+  <circle cx="292" cy="417" r="3" fill="#3a6a45" opacity="0.7"/>
+  <text x="268" y="412" font-family="monospace" font-size="9" fill="#3a6a45" text-anchor="middle">N:1</text>
+
+  <!-- 7. Escalation → Ticket  (1:1 solid gold) -->
+  <!-- Escalation right-center (532,417) → Ticket left-center (578,417) -->
+  <path d="M532,417 L578,417"
+        fill="none" stroke="#8a6a20" stroke-width="1.8" stroke-opacity="0.75"
+        marker-end="url(#arr-gold)"/>
+  <circle cx="532" cy="417" r="3" fill="#8a6a20" opacity="0.7"/>
+  <text x="555" y="411" font-family="monospace" font-size="9" fill="#aa8a30" text-anchor="middle">1:1</text>
+
+  <!-- 8. Session → CSAT  (1:1 dashed arc, routes through inter-row gap) -->
+  <!-- Session bottom-right area (532,240) → arc → CSAT left-center (864,390) -->
+  <path d="M532,240 C680,272 820,272 864,390"
+        fill="none" stroke="#5a3a80" stroke-width="1.5" stroke-opacity="0.5"
+        stroke-dasharray="5,4"
+        marker-end="url(#arr-purple)"/>
+  <circle cx="532" cy="240" r="3" fill="#5a3a80" opacity="0.5"/>
+  <text x="710" y="266" font-family="monospace" font-size="9" fill="#7a5aaa" text-anchor="middle">1:1 (feedback)</text>
+
+  <!-- 9. Customer → Ticket  (1:N dashed arc below, routes under all cards) -->
+  <!-- Customer bottom (155,225) → deep arc → Ticket left-bottom (578,523) -->
+  <path d="M155,225 C155,640 578,640 578,523"
+        fill="none" stroke="#3a4a70" stroke-width="1.5" stroke-opacity="0.4"
+        stroke-dasharray="5,4"
+        marker-end="url(#arr-blue)"/>
+  <circle cx="155" cy="225" r="3" fill="#3a4a70" opacity="0.4"/>
+  <text x="370" y="654" font-family="monospace" font-size="9" fill="#3a5090" text-anchor="middle">1:N (customer_id in Ticket)</text>
+
+
+  <!-- ═══════════════════════════════════════
+       ENTITY CARDS
+       ═══════════════════════════════════════ -->
+
+  <!-- ──────────────────────────────────────
+       CUSTOMER  x=6 y=30 w=240 h=195
+       ────────────────────────────────────── -->
+  <g filter="url(#shadow)">
+    <rect x="6"  y="30" width="240" height="195" rx="12" fill="#14171f" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+    <rect x="6"  y="30" width="240" height="42"  rx="12" fill="#1a2236"/>
+    <rect x="6"  y="58" width="240" height="14"        fill="#1a2236"/>
+    <text x="22" y="57" font-family="sans-serif" font-size="13" font-weight="bold" fill="#7eb8f7">CUSTOMER</text>
+    <line x1="6" y1="72" x2="246" y2="72" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+    <!-- customer_id PK -->
+    <rect x="14" y="79"  width="22" height="13" rx="3" fill="#1e2e4a"/>
+    <text x="15" y="89"  font-family="monospace" font-size="8.5" fill="#7eb8f7">PK</text>
+    <text x="42" y="89"  font-family="monospace" font-size="9.5" fill="#c5cdd8">customer_id</text>
+    <text x="240" y="89"  font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">INT</text>
+    <!-- name -->
+    <rect x="14" y="97"  width="22" height="13" rx="3" fill="#232530"/>
+    <text x="17" y="107" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="42" y="107" font-family="monospace" font-size="9.5" fill="#8892a4">name</text>
+    <text x="240" y="107" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">VARCHAR</text>
+    <!-- email -->
+    <rect x="14" y="115" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="17" y="125" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="42" y="125" font-family="monospace" font-size="9.5" fill="#8892a4">email</text>
+    <text x="240" y="125" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">VARCHAR</text>
+    <!-- phone -->
+    <rect x="14" y="133" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="17" y="143" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="42" y="143" font-family="monospace" font-size="9.5" fill="#8892a4">phone</text>
+    <text x="240" y="143" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">VARCHAR</text>
+    <!-- account_no -->
+    <rect x="14" y="151" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="17" y="161" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="42" y="161" font-family="monospace" font-size="9.5" fill="#8892a4">account_no</text>
+    <text x="240" y="161" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">VARCHAR</text>
+    <!-- tier -->
+    <rect x="14" y="169" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="17" y="179" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="42" y="179" font-family="monospace" font-size="9.5" fill="#8892a4">tier</text>
+    <text x="240" y="179" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">ENUM</text>
+    <!-- created_at -->
+    <rect x="14" y="187" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="17" y="197" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="42" y="197" font-family="monospace" font-size="9.5" fill="#8892a4">created_at</text>
+    <text x="240" y="197" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">DATETIME</text>
+  </g>
+
+  <!-- ──────────────────────────────────────
+       SESSION  x=292 y=30 w=240 h=213
+       ────────────────────────────────────── -->
+  <g filter="url(#shadow)">
+    <rect x="292" y="30" width="240" height="213" rx="12" fill="#14171f" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+    <rect x="292" y="30" width="240" height="42"  rx="12" fill="#241a2b"/>
+    <rect x="292" y="58" width="240" height="14"        fill="#241a2b"/>
+    <text x="308" y="57" font-family="sans-serif" font-size="13" font-weight="bold" fill="#c07ef5">SESSION</text>
+    <line x1="292" y1="72" x2="532" y2="72" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+    <!-- session_id PK -->
+    <rect x="300" y="79"  width="22" height="13" rx="3" fill="#2a1e3a"/>
+    <text x="301" y="89"  font-family="monospace" font-size="8.5" fill="#c07ef5">PK</text>
+    <text x="328" y="89"  font-family="monospace" font-size="9.5" fill="#c5cdd8">session_id</text>
+    <text x="526" y="89"  font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">INT</text>
+    <!-- customer_id FK -->
+    <rect x="300" y="97"  width="22" height="13" rx="3" fill="#1e3028"/>
+    <text x="301" y="107" font-family="monospace" font-size="8.5" fill="#72d489">FK</text>
+    <text x="328" y="107" font-family="monospace" font-size="9.5" fill="#8892a4">customer_id</text>
+    <text x="526" y="107" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">INT</text>
+    <!-- channel -->
+    <rect x="300" y="115" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="303" y="125" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="328" y="125" font-family="monospace" font-size="9.5" fill="#8892a4">channel</text>
+    <text x="526" y="125" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">ENUM</text>
+    <!-- started_at -->
+    <rect x="300" y="133" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="303" y="143" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="328" y="143" font-family="monospace" font-size="9.5" fill="#8892a4">started_at</text>
+    <text x="526" y="143" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">DATETIME</text>
+    <!-- ended_at -->
+    <rect x="300" y="151" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="303" y="161" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="328" y="161" font-family="monospace" font-size="9.5" fill="#8892a4">ended_at</text>
+    <text x="526" y="161" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">DATETIME</text>
+    <!-- status -->
+    <rect x="300" y="169" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="303" y="179" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="328" y="179" font-family="monospace" font-size="9.5" fill="#8892a4">status</text>
+    <text x="526" y="179" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">ENUM</text>
+    <!-- bot_confidence -->
+    <rect x="300" y="187" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="303" y="197" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="328" y="197" font-family="monospace" font-size="9.5" fill="#8892a4">bot_confidence</text>
+    <text x="526" y="197" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">FLOAT</text>
+    <!-- escalated -->
+    <rect x="300" y="205" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="303" y="215" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="328" y="215" font-family="monospace" font-size="9.5" fill="#8892a4">escalated</text>
+    <text x="526" y="215" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">BOOLEAN</text>
+  </g>
+
+  <!-- ──────────────────────────────────────
+       MESSAGE  x=578 y=30 w=240 h=195
+       ────────────────────────────────────── -->
+  <g filter="url(#shadow)">
+    <rect x="578" y="30" width="240" height="195" rx="12" fill="#14171f" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+    <rect x="578" y="30" width="240" height="42"  rx="12" fill="#2b1f18"/>
+    <rect x="578" y="58" width="240" height="14"        fill="#2b1f18"/>
+    <text x="594" y="57" font-family="sans-serif" font-size="13" font-weight="bold" fill="#f5a46a">MESSAGE</text>
+    <line x1="578" y1="72" x2="818" y2="72" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+    <!-- message_id PK -->
+    <rect x="586" y="79"  width="22" height="13" rx="3" fill="#3a2010"/>
+    <text x="587" y="89"  font-family="monospace" font-size="8.5" fill="#f5a46a">PK</text>
+    <text x="614" y="89"  font-family="monospace" font-size="9.5" fill="#c5cdd8">message_id</text>
+    <text x="812" y="89"  font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">INT</text>
+    <!-- session_id FK -->
+    <rect x="586" y="97"  width="22" height="13" rx="3" fill="#1e3028"/>
+    <text x="587" y="107" font-family="monospace" font-size="8.5" fill="#72d489">FK</text>
+    <text x="614" y="107" font-family="monospace" font-size="9.5" fill="#8892a4">session_id</text>
+    <text x="812" y="107" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">INT</text>
+    <!-- sender_type -->
+    <rect x="586" y="115" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="589" y="125" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="614" y="125" font-family="monospace" font-size="9.5" fill="#8892a4">sender_type</text>
+    <text x="812" y="125" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">ENUM</text>
+    <!-- content -->
+    <rect x="586" y="133" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="589" y="143" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="614" y="143" font-family="monospace" font-size="9.5" fill="#8892a4">content</text>
+    <text x="812" y="143" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">TEXT</text>
+    <!-- intent -->
+    <rect x="586" y="151" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="589" y="161" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="614" y="161" font-family="monospace" font-size="9.5" fill="#8892a4">intent</text>
+    <text x="812" y="161" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">VARCHAR</text>
+    <!-- confidence -->
+    <rect x="586" y="169" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="589" y="179" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="614" y="179" font-family="monospace" font-size="9.5" fill="#8892a4">confidence</text>
+    <text x="812" y="179" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">FLOAT</text>
+    <!-- sent_at -->
+    <rect x="586" y="187" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="589" y="197" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="614" y="197" font-family="monospace" font-size="9.5" fill="#8892a4">sent_at</text>
+    <text x="812" y="197" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">DATETIME</text>
+  </g>
+
+  <!-- ──────────────────────────────────────
+       KNOWLEDGE BASE  x=864 y=30 w=240 h=178
+       ────────────────────────────────────── -->
+  <g filter="url(#shadow)">
+    <rect x="864" y="30" width="240" height="178" rx="12" fill="#14171f" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+    <rect x="864" y="30" width="240" height="42"  rx="12" fill="#1e2828"/>
+    <rect x="864" y="58" width="240" height="14"        fill="#1e2828"/>
+    <text x="880" y="57" font-family="sans-serif" font-size="13" font-weight="bold" fill="#6ad4d4">KNOWLEDGE BASE</text>
+    <line x1="864" y1="72" x2="1104" y2="72" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+    <!-- kb_id PK -->
+    <rect x="872" y="79"  width="22" height="13" rx="3" fill="#163030"/>
+    <text x="873" y="89"  font-family="monospace" font-size="8.5" fill="#6ad4d4">PK</text>
+    <text x="900" y="89"  font-family="monospace" font-size="9.5" fill="#c5cdd8">kb_id</text>
+    <text x="1098" y="89"  font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">INT</text>
+    <!-- title -->
+    <rect x="872" y="97"  width="22" height="13" rx="3" fill="#232530"/>
+    <text x="875" y="107" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="900" y="107" font-family="monospace" font-size="9.5" fill="#8892a4">title</text>
+    <text x="1098" y="107" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">VARCHAR</text>
+    <!-- content -->
+    <rect x="872" y="115" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="875" y="125" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="900" y="125" font-family="monospace" font-size="9.5" fill="#8892a4">content</text>
+    <text x="1098" y="125" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">TEXT</text>
+    <!-- category -->
+    <rect x="872" y="133" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="875" y="143" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="900" y="143" font-family="monospace" font-size="9.5" fill="#8892a4">category</text>
+    <text x="1098" y="143" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">VARCHAR</text>
+    <!-- tags -->
+    <rect x="872" y="151" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="875" y="161" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="900" y="161" font-family="monospace" font-size="9.5" fill="#8892a4">tags</text>
+    <text x="1098" y="161" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">VARCHAR</text>
+    <!-- last_updated -->
+    <rect x="872" y="169" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="875" y="179" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="900" y="179" font-family="monospace" font-size="9.5" fill="#8892a4">last_updated</text>
+    <text x="1098" y="179" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">DATETIME</text>
+  </g>
+
+  <!-- ──────────────────────────────────────
+       AGENT  x=6 y=310 w=240 h=178
+       ────────────────────────────────────── -->
+  <g filter="url(#shadow)">
+    <rect x="6"  y="310" width="240" height="178" rx="12" fill="#14171f" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+    <rect x="6"  y="310" width="240" height="42"  rx="12" fill="#1a2c1e"/>
+    <rect x="6"  y="338" width="240" height="14"        fill="#1a2c1e"/>
+    <text x="22" y="337" font-family="sans-serif" font-size="13" font-weight="bold" fill="#72d489">AGENT</text>
+    <line x1="6" y1="352" x2="246" y2="352" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+    <!-- agent_id PK -->
+    <rect x="14" y="359" width="22" height="13" rx="3" fill="#1e3028"/>
+    <text x="15" y="369" font-family="monospace" font-size="8.5" fill="#72d489">PK</text>
+    <text x="42" y="369" font-family="monospace" font-size="9.5" fill="#c5cdd8">agent_id</text>
+    <text x="240" y="369" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">INT</text>
+    <!-- name -->
+    <rect x="14" y="377" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="17" y="387" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="42" y="387" font-family="monospace" font-size="9.5" fill="#8892a4">name</text>
+    <text x="240" y="387" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">VARCHAR</text>
+    <!-- email -->
+    <rect x="14" y="395" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="17" y="405" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="42" y="405" font-family="monospace" font-size="9.5" fill="#8892a4">email</text>
+    <text x="240" y="405" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">VARCHAR</text>
+    <!-- department -->
+    <rect x="14" y="413" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="17" y="423" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="42" y="423" font-family="monospace" font-size="9.5" fill="#8892a4">department</text>
+    <text x="240" y="423" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">VARCHAR</text>
+    <!-- status -->
+    <rect x="14" y="431" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="17" y="441" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="42" y="441" font-family="monospace" font-size="9.5" fill="#8892a4">status</text>
+    <text x="240" y="441" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">ENUM</text>
+    <!-- skills -->
+    <rect x="14" y="449" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="17" y="459" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="42" y="459" font-family="monospace" font-size="9.5" fill="#8892a4">skills</text>
+    <text x="240" y="459" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">VARCHAR</text>
+  </g>
+
+  <!-- ──────────────────────────────────────
+       ESCALATION  x=292 y=310 w=240 h=213
+       ────────────────────────────────────── -->
+  <g filter="url(#shadow)">
+    <rect x="292" y="310" width="240" height="213" rx="12" fill="#14171f" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+    <rect x="292" y="310" width="240" height="42"  rx="12" fill="#2a1818"/>
+    <rect x="292" y="338" width="240" height="14"        fill="#2a1818"/>
+    <text x="308" y="337" font-family="sans-serif" font-size="13" font-weight="bold" fill="#f07070">ESCALATION</text>
+    <line x1="292" y1="352" x2="532" y2="352" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+    <!-- escalation_id PK -->
+    <rect x="300" y="359" width="22" height="13" rx="3" fill="#3a1010"/>
+    <text x="301" y="369" font-family="monospace" font-size="8.5" fill="#f07070">PK</text>
+    <text x="328" y="369" font-family="monospace" font-size="9.5" fill="#c5cdd8">escalation_id</text>
+    <text x="526" y="369" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">INT</text>
+    <!-- session_id FK -->
+    <rect x="300" y="377" width="22" height="13" rx="3" fill="#1e3028"/>
+    <text x="301" y="387" font-family="monospace" font-size="8.5" fill="#72d489">FK</text>
+    <text x="328" y="387" font-family="monospace" font-size="9.5" fill="#8892a4">session_id</text>
+    <text x="526" y="387" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">INT</text>
+    <!-- agent_id FK -->
+    <rect x="300" y="395" width="22" height="13" rx="3" fill="#1e3028"/>
+    <text x="301" y="405" font-family="monospace" font-size="8.5" fill="#72d489">FK</text>
+    <text x="328" y="405" font-family="monospace" font-size="9.5" fill="#8892a4">agent_id</text>
+    <text x="526" y="405" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">INT</text>
+    <!-- trigger_type -->
+    <rect x="300" y="413" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="303" y="423" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="328" y="423" font-family="monospace" font-size="9.5" fill="#8892a4">trigger_type</text>
+    <text x="526" y="423" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">ENUM</text>
+    <!-- reason -->
+    <rect x="300" y="431" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="303" y="441" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="328" y="441" font-family="monospace" font-size="9.5" fill="#8892a4">reason</text>
+    <text x="526" y="441" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">TEXT</text>
+    <!-- wait_time -->
+    <rect x="300" y="449" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="303" y="459" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="328" y="459" font-family="monospace" font-size="9.5" fill="#8892a4">wait_time</text>
+    <text x="526" y="459" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">INT</text>
+    <!-- escalated_at -->
+    <rect x="300" y="467" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="303" y="477" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="328" y="477" font-family="monospace" font-size="9.5" fill="#8892a4">escalated_at</text>
+    <text x="526" y="477" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">DATETIME</text>
+    <!-- status -->
+    <rect x="300" y="485" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="303" y="495" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="328" y="495" font-family="monospace" font-size="9.5" fill="#8892a4">status</text>
+    <text x="526" y="495" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">ENUM</text>
+  </g>
+
+  <!-- ──────────────────────────────────────
+       TICKET  x=578 y=310 w=240 h=213
+       ────────────────────────────────────── -->
+  <g filter="url(#shadow)">
+    <rect x="578" y="310" width="240" height="213" rx="12" fill="#14171f" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+    <rect x="578" y="310" width="240" height="42"  rx="12" fill="#2a2218"/>
+    <rect x="578" y="338" width="240" height="14"        fill="#2a2218"/>
+    <text x="594" y="337" font-family="sans-serif" font-size="13" font-weight="bold" fill="#f5d36a">TICKET</text>
+    <line x1="578" y1="352" x2="818" y2="352" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+    <!-- ticket_id PK -->
+    <rect x="586" y="359" width="22" height="13" rx="3" fill="#3a3010"/>
+    <text x="587" y="369" font-family="monospace" font-size="8.5" fill="#f5d36a">PK</text>
+    <text x="614" y="369" font-family="monospace" font-size="9.5" fill="#c5cdd8">ticket_id</text>
+    <text x="812" y="369" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">INT</text>
+    <!-- escalation_id FK -->
+    <rect x="586" y="377" width="22" height="13" rx="3" fill="#1e3028"/>
+    <text x="587" y="387" font-family="monospace" font-size="8.5" fill="#72d489">FK</text>
+    <text x="614" y="387" font-family="monospace" font-size="9.5" fill="#8892a4">escalation_id</text>
+    <text x="812" y="387" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">INT</text>
+    <!-- customer_id FK -->
+    <rect x="586" y="395" width="22" height="13" rx="3" fill="#1e3028"/>
+    <text x="587" y="405" font-family="monospace" font-size="8.5" fill="#72d489">FK</text>
+    <text x="614" y="405" font-family="monospace" font-size="9.5" fill="#8892a4">customer_id</text>
+    <text x="812" y="405" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">INT</text>
+    <!-- subject -->
+    <rect x="586" y="413" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="589" y="423" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="614" y="423" font-family="monospace" font-size="9.5" fill="#8892a4">subject</text>
+    <text x="812" y="423" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">VARCHAR</text>
+    <!-- description -->
+    <rect x="586" y="431" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="589" y="441" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="614" y="441" font-family="monospace" font-size="9.5" fill="#8892a4">description</text>
+    <text x="812" y="441" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">TEXT</text>
+    <!-- priority -->
+    <rect x="586" y="449" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="589" y="459" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="614" y="459" font-family="monospace" font-size="9.5" fill="#8892a4">priority</text>
+    <text x="812" y="459" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">ENUM</text>
+    <!-- status -->
+    <rect x="586" y="467" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="589" y="477" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="614" y="477" font-family="monospace" font-size="9.5" fill="#8892a4">status</text>
+    <text x="812" y="477" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">ENUM</text>
+    <!-- created_at -->
+    <rect x="586" y="485" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="589" y="495" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="614" y="495" font-family="monospace" font-size="9.5" fill="#8892a4">created_at</text>
+    <text x="812" y="495" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">DATETIME</text>
+  </g>
+
+  <!-- ──────────────────────────────────────
+       CSAT  x=864 y=310 w=240 h=178
+       ────────────────────────────────────── -->
+  <g filter="url(#shadow)">
+    <rect x="864" y="310" width="240" height="178" rx="12" fill="#14171f" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+    <rect x="864" y="310" width="240" height="42"  rx="12" fill="#2a1a2a"/>
+    <rect x="864" y="338" width="240" height="14"        fill="#2a1a2a"/>
+    <text x="880" y="337" font-family="sans-serif" font-size="13" font-weight="bold" fill="#f07ab0">CSAT / FEEDBACK</text>
+    <line x1="864" y1="352" x2="1104" y2="352" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+    <!-- csat_id PK -->
+    <rect x="872" y="359" width="22" height="13" rx="3" fill="#3a1530"/>
+    <text x="873" y="369" font-family="monospace" font-size="8.5" fill="#f07ab0">PK</text>
+    <text x="900" y="369" font-family="monospace" font-size="9.5" fill="#c5cdd8">csat_id</text>
+    <text x="1098" y="369" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">INT</text>
+    <!-- session_id FK -->
+    <rect x="872" y="377" width="22" height="13" rx="3" fill="#1e3028"/>
+    <text x="873" y="387" font-family="monospace" font-size="8.5" fill="#72d489">FK</text>
+    <text x="900" y="387" font-family="monospace" font-size="9.5" fill="#8892a4">session_id</text>
+    <text x="1098" y="387" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">INT</text>
+    <!-- bot_rating -->
+    <rect x="872" y="395" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="875" y="405" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="900" y="405" font-family="monospace" font-size="9.5" fill="#8892a4">bot_rating</text>
+    <text x="1098" y="405" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">INT</text>
+    <!-- agent_rating -->
+    <rect x="872" y="413" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="875" y="423" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="900" y="423" font-family="monospace" font-size="9.5" fill="#8892a4">agent_rating</text>
+    <text x="1098" y="423" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">INT</text>
+    <!-- comment -->
+    <rect x="872" y="431" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="875" y="441" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="900" y="441" font-family="monospace" font-size="9.5" fill="#8892a4">comment</text>
+    <text x="1098" y="441" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">TEXT</text>
+    <!-- submitted_at -->
+    <rect x="872" y="449" width="22" height="13" rx="3" fill="#232530"/>
+    <text x="875" y="459" font-family="monospace" font-size="8" fill="#555d72">—</text>
+    <text x="900" y="459" font-family="monospace" font-size="9.5" fill="#8892a4">submitted_at</text>
+    <text x="1098" y="459" font-family="monospace" font-size="8" fill="#4a5268" text-anchor="end">DATETIME</text>
+  </g>
+
+</svg>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><span class="leg-pk">PK</span> Primary Key</div>
+  <div class="legend-item"><span class="leg-fk">FK</span> Foreign Key</div>
+  <div class="legend-item">
+    <svg width="36" height="10" style="flex-shrink:0">
+      <line x1="0" y1="5" x2="28" y2="5" stroke="#3a4a70" stroke-width="1.8"/>
+      <polygon points="24,2 36,5 24,8" fill="#3a4a70"/>
+    </svg>
+    One-to-Many / One-to-One
+  </div>
+  <div class="legend-item">
+    <svg width="36" height="10" style="flex-shrink:0">
+      <line x1="0" y1="5" x2="28" y2="5" stroke="#3a4a70" stroke-width="1.8" stroke-dasharray="4,3"/>
+      <polygon points="24,2 36,5 24,8" fill="#3a4a70"/>
+    </svg>
+    Indirect / Reference
+  </div>
+  <div class="legend-item">
+    <svg width="36" height="10" style="flex-shrink:0">
+      <line x1="0" y1="5" x2="28" y2="5" stroke="#2a7070" stroke-width="1.8" stroke-dasharray="4,3"/>
+      <polygon points="24,2 36,5 24,8" fill="#2a7070"/>
+    </svg>
+    Queries (Bot → KB)
+  </div>
+</div>
+
+<footer>Customer Service AI Chatbot · Entity Relationship Diagram · VS Code Ready</footer>
+
+</body>
+</html>
