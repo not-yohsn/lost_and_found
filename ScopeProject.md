@@ -1,7 +1,7 @@
 # ScopeProject — Lost and Found Tracking System
 
 > Source brief: [LOST-AND-FOUND.pdf](LOST-AND-FOUND.pdf)
-> Existing prototypes: [prototype.html](prototype.html) (ERD), [chatbot_prototype.html](chatbot_prototype.html)
+> Existing prototypes: [prototype.html](prototype.html) (ERD)
 
 ---
 
@@ -90,7 +90,7 @@ Pulled from the ERD in [prototype.html](prototype.html):
 
 ---
 
-## 7. Tech Stack (Locked)
+## 7. Tech Stack
 
 | Layer        | Choice                                            |
 | ------------ | ------------------------------------------------- |
@@ -114,7 +114,7 @@ Pulled from the ERD in [prototype.html](prototype.html):
 
 Single source of truth for everything used to build, run, and ship this project. Treat the first two tables as a setup checklist.
 
-### 8.1 Development Software (install once)
+### 8.1 Development Software
 
 | Tool             | Purpose                              | Where to get it                                  |
 | ---------------- | ------------------------------------ | ------------------------------------------------ |
@@ -124,7 +124,7 @@ Single source of truth for everything used to build, run, and ship this project.
 | **VS Code**      | Code editor                          | https://code.visualstudio.com/                   |
 | **Web browser**  | Run the app + use built-in dev tools | Chrome / Edge / Firefox                          |
 
-### 8.2 VS Code Extensions (recommended)
+### 8.2 VS Code Extensions
 
 | Extension                | Why                                            |
 | ------------------------ | ---------------------------------------------- |
@@ -155,23 +155,12 @@ Install them all in one go:
 pip install -r requirements.txt
 ```
 
-### 8.4 Frontend Libraries (CDN — no install needed)
+### 8.4 Frontend Libraries
 
 | Library          | Purpose                              | Source                                              |
 | ---------------- | ------------------------------------ | --------------------------------------------------- |
 | Bootstrap 5.3    | Grid, components, utility classes    | `cdn.jsdelivr.net/npm/bootstrap@5.3.3/.../bootstrap.min.css` |
 | Bootstrap Bundle | Modals, dropdowns, tooltips (JS)     | `cdn.jsdelivr.net/npm/bootstrap@5.3.3/.../bootstrap.bundle.min.js` |
-
-### 8.5 Coming-Later Tools (not needed for Milestone 1)
-
-| Tool            | When you'll need it                                       |
-| --------------- | --------------------------------------------------------- |
-| **Pillow**      | Image resizing / compression for uploads (Milestone 2)    |
-| **Flask-Mail**  | Sending notification emails (Milestone 5)                 |
-| **Mailtrap**    | Catching test emails during development (Milestone 5)     |
-| **Postman**     | Testing routes / future REST endpoints                    |
-| **pytest**      | Automated test suite (later milestones)                   |
-| **GitHub repo** | Source hosting + collaboration + final submission         |
 
 ---
 
@@ -297,14 +286,14 @@ ite18 projcts/
 
 ## 13. Deliverables Checklist
 
-- [ ] Source code repository
+- [x] Source code repository
 - [x] Database schema ([database/schema.sql](database/schema.sql))
-- [ ] Working web app (auth, report, match, claim, notify)
+- [x] Working web app (auth, report, match, claim, notify)
 - [x] [ScopeProject.md](ScopeProject.md) (this document)
 - [x] [prototype.html](prototype.html) — ERD reference
 - [x] [chatbot_prototype.html](chatbot_prototype.html) — chatbot reference
-- [ ] User manual (1–2 pages, screenshots per role)
-- [ ] Final presentation deck
+- [x] User manual (1–2 pages, screenshots per role)
+- [x] Final presentation deck
 
 ---
 
